@@ -53,9 +53,12 @@ footer a{margin-right:14px}
 <p class="meta">Need help? Email <a href="mailto:support@sermocampus.com">support@sermocampus.com</a>.</p>
 <script>
 (function () {
-  var token = new URLSearchParams(location.search).get('token') || '';
+  var params = new URLSearchParams(location.search);
+  var token = params.get('token') || '';
   var button = document.getElementById('go');
   var message = document.getElementById('message');
+  var redirectTo = "https://sermocampus.com/confirmed";
+  var after = "Confirming your email address…";
   if (location.search || location.hash) history.replaceState(null, '', location.pathname);
   if (!/^[A-Za-z0-9_-]{20,200}$/.test(token)) {
     document.getElementById('title').textContent = 'This link did not work';
@@ -66,8 +69,8 @@ footer a{margin-right:14px}
   button.addEventListener('click', function () {
     if (button.disabled) return;
     button.disabled = true;
-    message.textContent = "Confirming your email address…";
-    location.assign("https://rpajnnerhewlwjobvclj.supabase.co/auth/v1/verify?token=" + token + "&type=signup&redirect_to=https%3A%2F%2Fsermocampus.com%2Fconfirmed");
+    message.textContent = after;
+    location.assign("https://rpajnnerhewlwjobvclj.supabase.co/auth/v1/verify?token=" + token + "&type=signup&redirect_to=" + encodeURIComponent(redirectTo));
   });
 })();
 </script>
